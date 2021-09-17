@@ -15,6 +15,9 @@
     background-position: center;
 }
 
+
+/** aplicacion de estilos a los cards **/
+
 html, body{
     margin: 0;
     padding: 0;
@@ -38,9 +41,7 @@ body{
     font-family: 'Roboto', sans-serif;
 }
 
-/** aplicacion de estilos a los cards **/
-
-.container{
+.Cards-libros .container{
     width: 100%;
     max-width: 1200px;
     height: 430px;
