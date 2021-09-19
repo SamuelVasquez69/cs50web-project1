@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+   
+</head>
+<body>
+    <br>
+    <!-- Creacion de un buscador de libros -->
+    <input class="form-control" type="text" name="buscador-libros" id="input-libros" placeholder="Buscar Info Libro...">
+    <br>
+    <!-- tabla de los libros -->
+    <div class="container mt-4">
+        <table class="table table-bordered">
+            <thead>
+                <th>ISBN</th>
+                <th>TITLE</th>
+                <th>AUTHOR</th>
+                <th>YEAR</th>
+            </thead>    
+            <tbody id="tabla-libros"> 
+                <tr>
+                    <td>123</td>
+                    <td id="name-libro">Biblia</td>
+                    <td>Dios</td>
+                    <td>00000</td>
+                </tr>
+                <tr>
+                    <td>123</td>
+                    <td>Cpillin</td>
+                    <td>Samuel</td>
+                    <td>00001</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+             $("#input-libros").on("keyup", function() {
+                 var value = $(this).val().toLowerCase();
+                 $("#tabla-libros tr").filter(function() {
+                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                 });
+             });
+         }); 
+     </script>
+</body>
+</html>
