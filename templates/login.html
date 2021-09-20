@@ -24,24 +24,24 @@
                                 <h1>Login</h1>
                             </div>
                         </div>
-                    <form action="/" method="post" name="login">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">User Name</label>
-                                <input type="name" name="username"  class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Password</label>
-                                <input type="password" name="password" id="password"  class="form-control" aria-describedby="emailHelp" placeholder="Enter Password">
-                            </div>
+                        <form action="/login" method="post" name="login">
+                                <div class="form-group">
+                                    <label for="username">User Name</label>
+                                    <input type="text" name="username"  class="form-control" id="username" placeholder="Enter username">
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">Password</label>
+                                    <input type="password" name="password" id="password"  class="form-control" placeholder="Enter Password">
+                                </div>
+                                
+                                <div class="col-md-12 text-center " style="padding-bottom: 15px; padding-top: 15px;">
+                                    <button type="submit" class=" btn btn-block mybtn btn-primary tx-tfm">Login</button>
+                                </div>
                             
-                            <div class="col-md-12 text-center " style="padding-bottom: 15px; padding-top: 15px;">
-                                <button type="submit" class=" btn btn-block mybtn btn-primary tx-tfm">Login</button>
-                            </div>
-                         
-                            <div class="form-group">
-                                <p class="text-center">Don't have account? <a href="register.html" id="signup">Sign up</a></p>
-                            </div>
-                            </form>
+                                <div class="form-group">
+                                    <p class="text-center">Don't have account? <a href="register.html" id="signup">Sign up</a></p>
+                                </div>
+                        </form>
                     
                     </div>
                 </div>
