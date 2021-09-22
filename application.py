@@ -36,9 +36,9 @@ def login():
         elif not password:
             return render_template("error.html", 403)
 
-        consulta = db.execute("SELECT * FROM usuarios WHERE username = :username", username=request.form.get("username"))
+        consulta = db.execute("SELECT * FROM usuarios WHERE username = :username", { "username":request.form.get("username")})
         
-        if len(consulta) != 1:
+        if consulta:
             return render_template("error.html")
         if not check_password_hash(consulta[0][password], password):
             return render_template("error.html")
@@ -64,15 +64,23 @@ def register():
         if not contra:
             return render_template("error.html")
 
-        consulta = db.execute("SELECT * FROM usuarios WHERE username LIKE :usser", usser)
+        consulta = db.execute("SELECT * FROM usuarios WHERE username =:usser", {"usser": usser}).fetchone()
 
-        if len(consulta) == 1:
+        if consulta:
             return "usuario tomado"
+        else:
+            return "usuario disponible"
 
         contra = generate_password_hash(contra)
-        nuevo_usuario = db.execute("INSERT INTO usuarios(password, username) VALUES(:password, :username) ", username=usser, password=contra)
+        nuevo_usuario = db.execute("""INSERT INTO usuarios(password, username) VALUES(:password, :username) """,{" username": usser, "password": contra}).fetchone()
 
-        session["id_usuario"] = nuevo_usuario
+        db.commit()
+
+       # nuevo_usuario = db.execute("SELECT id_usuario FROM usuarios  WHERE username = :usser", usser=usser).fetchone()
+        #nuevo_usuario=nuevo_usuario[0]
+        #print(nuevo_usuario)
+        session["id_usuario"] = nuevo_usuario[0]
+        session["ussername"]= nuevo_usuario[1]
         flash("Registrado Exitosamente!")
 
         return redirect(url_for("index"))
