@@ -31,20 +31,20 @@ def login():
         password = request.form.get("password")
         #nos aseguramos que haya llenado el username 
         if not username:
-            return render_template("error.html", 403)
+            return "campo de Ussername vacio"
 
         elif not password:
-            return render_template("error.html", 403)
+            return "campo de password vacio"
 
-        consulta = db.execute("SELECT * FROM usuarios WHERE username = :username", { "username":request.form.get("username")})
+        consulta = db.execute("SELECT * FROM usuarios WHERE username = :username", { "username":request.form.get("username")}).fetchone()
         
-        if consulta:
-            return render_template("error.html")
-        if not check_password_hash(consulta[0][password], password):
-            return render_template("error.html")
+        if not consulta:
+            return "usuario no registrado"
+        if not check_password_hash(consulta[1], password):
+            return "password no coinciden"
         
-        session["id_usuario"] = consulta[0]["id_usuario"]
-
+        session["id_usuario"] = consulta
+        flash("LOGEADO EXITOSAMENTE")
         return redirect("/")
     else:
          return render_template("login.html")
@@ -69,24 +69,17 @@ def register():
         if consulta:
             return "usuario tomado"
         else:
-            return "usuario disponible"
+            Contra = generate_password_hash(contra)
+            nuevo_usuario = db.execute("INSERT INTO usuarios(password, username) VALUES(:password, :username) ",{"password": Contra,"username": usser})
 
-        contra = generate_password_hash(contra)
-        nuevo_usuario = db.execute("""INSERT INTO usuarios(password, username) VALUES(:password, :username) """,{" username": usser, "password": contra}).fetchone()
+            db.commit()
+            flash("Registrado Exitosamente!")
 
-        db.commit()
-
-       # nuevo_usuario = db.execute("SELECT id_usuario FROM usuarios  WHERE username = :usser", usser=usser).fetchone()
-        #nuevo_usuario=nuevo_usuario[0]
-        #print(nuevo_usuario)
-        session["id_usuario"] = nuevo_usuario[0]
-        session["ussername"]= nuevo_usuario[1]
-        flash("Registrado Exitosamente!")
-
-        return redirect(url_for("index"))
+            return redirect("/login")
     else:
         return render_template("register.html")
 
 @app.route("/")
 def index():
+
     return render_template("index.html")
