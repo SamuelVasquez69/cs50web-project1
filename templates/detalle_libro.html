@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block title %}
+  detalle_libro
+{% endblock %}
+
+{% block main%}
+
+<div class="container">
+    <div class="row comentarios">
+        <div class="caja">
+            <h1>Imagen del Libro</h1>
+            <img src="../static/artwork-440x440.jpg" alt="">
+        </div>
+    
+        <div class="caja">
+            <h3>Detalles del libro</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum quos assumenda quasi quisquam maiores deserunt hic ad velit iste aperiam nihil aliquid, eveniet eaque quod culpa totam accusamus, cumque itaque!</p>
+        </div>
+      
+    </div>
+    <div class="col-12 justify-content-center">
+        <form action="" class="comentario-formulario d-flex justify-content-end flex-wrap">
+            <textarea name="" id="" cols="30" rows="10" placeholder="Comenta..."></textarea>
+            <button class="boton-publicar">Publicar</button>
+        </form>
+       
+    </div>
+</div>
+
+
+{% endblock %}

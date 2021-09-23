@@ -81,5 +81,12 @@ def register():
 
 @app.route("/")
 def index():
+    
+    consulta = db.execute("SELECT * FROM books").fetchall()
+    
+    return render_template("index.html", libros=consulta)
 
-    return render_template("index.html")
+@app.route("/detalle_libro")
+def detallelibro():
+
+    return render_template("detalle_libro.html")
