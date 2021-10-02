@@ -6,27 +6,90 @@
 
 {% block main%}
 
-<div class="container">
-    <div class="row comentarios">
-        <div class="caja">
-            <h1>Imagen del Libro</h1>
-            <img src="../static/artwork-440x440.jpg" alt="">
+        <div class="row justify-content-center" style=" margin: 20px 0;">
+            {% for row in libro %}
+                <div class="col-3 caja">
+                    <h1 style=" font-family: cursive; text-align: center;">Imagen del Libro</h1>
+                    <img src="{{row.imagen}}" alt="">
+                </div>
+                
+                <form action="/detalle_libro/{{row.id_libro}}" method="post">   
+                    <div class="col-6 caja">
+                        <h1 style="padding-bottom: 20px; font-family: cursive; text-align: center;">Detalles del libro</h3>
+                        <h4 class="items_libro">Titulo del Libro: {{row.nombre_libro}}</h4>
+                        <h4 class="items_libro">Autor: {{row.author}}</h4>
+                        <h4 class="items_libro">Año Elaborado: {{row.year}}</h4>
+                        <br>
+                        <br>
+
+                        <div class="rating" style="text-align: center;">
+                            {% if not confirmation %}
+                                <h4 class="items_libro"> Rating:</h4>
+                                <span class="fa fa-star" onclick="calificar(this)" style="cursor: pointer;" id="1star" ></span>
+                                <span class="fa fa-star" onclick="calificar(this)" style="cursor: pointer;" id="2star" ></span>
+                                <span class="fa fa-star" onclick="calificar(this)" style="cursor: pointer;" id="3star" ></span>
+                                <span class="fa fa-star" onclick="calificar(this)" style="cursor: pointer;" id="4star" ></span>
+                                <span class="fa fa-star" onclick="calificar(this)" style="cursor: pointer;" id="5star" ></span>
+                                <br>
+                                <br>
+                                <input type="hidden" name="valor_rating" id="valor_rating" style="padding-bottom: 50px;">
+                            {% else %}
+                            <h4 class="items_libro">Usted ya proporciono una Evaluacion a este Libro</h4>
+                            {% endif %}
+                        </div> 
+                    </div>
+
+                    <div class=".col-12">
+                        <br><br><br>   
+                        <div class=" comentario-formulario d-flex justify-content-center">
+                            <textarea placeholder="Comenta..." id="caja-comentario" name="cajaComentario" ></textarea>
+                            <button class="boton-publicar" type="submit">Publicar</button>
+                        
+                        </div>
+                    </div>
+                </form>
+            {% endfor %}
+            
         </div>
     
-        <div class="caja">
-            <h3>Detalles del libro</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum quos assumenda quasi quisquam maiores deserunt hic ad velit iste aperiam nihil aliquid, eveniet eaque quod culpa totam accusamus, cumque itaque!</p>
-        </div>
-      
-    </div>
-    <div class="col-12 justify-content-center">
-        <form action="" class="comentario-formulario d-flex justify-content-end flex-wrap">
-            <textarea name="" id="" cols="30" rows="10" placeholder="Comenta..."></textarea>
-            <button class="boton-publicar">Publicar</button>
-        </form>
-       
-    </div>
+<div class="container">
+   
+    <br><br><br>
+    <h2 style="text-align: center;">Comentarios</h2>
+    <div class="container">
+        {% for row in comments %}
+        <ul class="list-group">
+          <li class="list-group-item">
+              Usuario: {{row.username}}
+              <br>
+              <br>
+              {{row.resena}}
+              <br>
+              <br>
+               Rating : {{row.rating}} </li>
+        </ul>
+        {% endfor %}
+      </div>
 </div>
 
 
+<script>
+    var contador
+    function calificar(item){
+        console.log(item);
+        contador = item.id[0];
+        let nombre = item.id.substring(1);
+        for(let i=0; i<5; i++){
+            if(i<contador){
+                document.getElementById((i+1)+nombre).style.color="yellow";
+            }else{
+                document.getElementById((i+1)+nombre).style.color="black";
+            }
+        }
+        var rating = document.getElementById("valor_rating");
+        rating.value = contador;
+        console.log(rating);
+    }
+</script>
 {% endblock %}
+

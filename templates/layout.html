@@ -9,6 +9,9 @@
 
     <link rel="stylesheet" href="../static/style.css">
 
+    <!-- agregar el icono del rating -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -17,54 +20,61 @@
 </head>
 
 <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="">
-                <img src="../static/logo.png" alt="">
-            </a>
-            <button class="navbar-toggler" data-target="#menu" data-toggle="collapse" type="button">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collpase navbar-collapse" id="menu">
-                <ul class="navbar-nav mr-auto">
-                    <li class="navbar-item ">
-                        <a href="/" class="nav-link ">
-                            Inicio
-                        </a>
-                    </li>
-                    <li class="navbar-item ">
-                        <a href="" class="nav-link ">
-                            Directorio Libros
-                        </a>
-                    </li>
+    {% if session.id_usuario %}
+        <div class="container">
+            <ul class="nav justify-content-end">
+                <div class="col-2">
+                    <span>Hola {{session['nombre']}}</span>
+                </div>
+                <a href="/logout">Cerrar Sesion</a>
+            </ul>
+        </div>
+    {% endif%}
+  
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="">
+            <img src="../static/logo.png" alt="">
+        </a>
+        <button class="navbar-toggler" data-target="#menu" data-toggle="collapse" type="button">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collpase navbar-collapse" id="menu">
+            <ul class="navbar-nav mr-auto">
+                <li class="navbar-item ">
+                    <a href="/" class="nav-link ">
+                        Inicio
+                    </a>
+                </li>
+                {% if not session.id_usuario %}
                     <li class="nav item dropdown">
-                        <a class="nav-link dropdown-toggle active " data-toggle="dropdown" data-target="desplegable"
-                            href="">
+                        <a class="nav-link dropdown-toggle active " data-toggle="dropdown" data-target="desplegable">
                             Cuentas
                         </a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="/login">Users</a>
-                        </div>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="">Admin</a>
+                            <a class="dropdown-item" href="/login">Iniciar Sesion</a>
+                            
+                            <a class="dropdown-item" href="/register">Registrate</a>
                         </div>
                     </li>
-                </ul>
-                <span class="navbar-text mr-sm-2">
-                    Libreria del Web50
-                </span>
+                {% endif %}
+               
+            </ul>
+            <span class="navbar-text mr-sm-2">
+                Libreria del Web50
+            </span>
 
-                <form class="form-inline" action="">
-                    <input class="form-control mr-sm-3" type="text" name="" id="">
-                    <button class="btn btn-success" id="boton-buscar">
-                        Buscar
-                    </button>
-                </form>
-            </div>
-        </nav>
-        <div class="cards">
-            {% block main%}
-            {% endblock %}
+            <form class="form-inline" action="/search" method="POST">
+                <input class="form-control mr-sm-3" type="text" name="busqueda" id="">
+                <button class="btn btn-success" id="boton-buscar" onclick="" name="boton_busqueda">
+                    Buscar
+                </button>
+            </form>
         </div>
+    </nav>
+    <div class="cards">
+        {% block main%}
+        {% endblock %}
+    </div>
 
 </body>
 
