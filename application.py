@@ -104,6 +104,7 @@ def index():
     return render_template("index.html", libros=diccionarios)
 
 @app.route("/detalle_libro/<string:id_libro>", methods=["POST","GET"])
+@login_required
 def detallelibro(id_libro):
 
     consulta = db.execute("SELECT * FROM books WHERE isbn=:id_libro",{"id_libro":id_libro}).fetchone()
@@ -112,9 +113,11 @@ def detallelibro(id_libro):
 
     usuario_actual = session["id_usuario"]
     comment  =  request.form.get("cajaComentario")
-    rating = request.form.get("valor_rating")
-    print("aqui va lo que tiene rating")
-    print(request.form)
+    try:
+        rating = request.form.get("valor_rating")
+    except DataError:
+        rating = 0
+
     if comment:
         db.execute("""INSERT INTO resenas (rating, resena, id_usuario, id_isbn) 
         VALUES (:rating, :resena, :id_usuario, :id_isbn)""",

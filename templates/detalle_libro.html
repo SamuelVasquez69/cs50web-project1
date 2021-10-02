@@ -38,15 +38,20 @@
                             {% endif %}
                         </div> 
                     </div>
-
+                    {% if session.id_usuario %}
                     <div class=".col-12">
                         <br><br><br>   
                         <div class=" comentario-formulario d-flex justify-content-center">
                             <textarea placeholder="Comenta..." id="caja-comentario" name="cajaComentario" ></textarea>
                             <button class="boton-publicar" type="submit">Publicar</button>
-                        
                         </div>
                     </div>
+                    {% else %}
+                    <div class=".col-12">
+                        <br><br><br>   
+                        <h2>USTED NO HA INICIADO SESSION, NO PUEDE COMENTAR ESTE LIBRO</h2>
+                    </div>
+                    {% endif %}
                 </form>
             {% endfor %}
             
